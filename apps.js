@@ -1,4 +1,5 @@
 document.getElementById('resultMessage').style.display = 'none';
+document.getElementById('spinner').style.display = 'none';
 const searchBook = () => {
     /*----- Access Input Value -----*/
     const searchField = document.getElementById('searchField');
@@ -9,6 +10,7 @@ const searchBook = () => {
 
     /*----- Result Field Display None -----*/
     document.getElementById('resultMessage').style.display = 'none';
+    toggleSpinner('block');
 
     /*----- Check Invalid Input -----*/
     if (searchText == '') {
@@ -24,6 +26,11 @@ const searchBook = () => {
     }
 }
 
+/*----- Spinner function -----*/
+const toggleSpinner = displayStyle => {
+    document.getElementById('spinner').style.display = displayStyle;
+}
+
 /*----- Display Count Result -----*/
 const displayMessage = number => {
     const resultNumber = document.getElementById('result');
@@ -37,11 +44,11 @@ const displaySearchResult = (searchBooks) => {
 
     /*----- Display Result -----*/
     searchResult.textContent = '';
-    if (searchBooks.length == 0) {
+    if (!searchBooks) {
         console.log('not found');
     }
     else {
-        searchBooks.forEach(searchBook => {
+        searchBooks?.forEach(searchBook => {
             const div = document.createElement('div');
             div.classList.add('col');
             div.innerHTML = `
@@ -59,5 +66,6 @@ const displaySearchResult = (searchBooks) => {
         `;
             searchResult.appendChild(div);
         });
+        toggleSpinner('none');
     }
 }
